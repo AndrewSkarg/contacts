@@ -24,9 +24,9 @@ class AddContactActivity: AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
     private lateinit var photoUrl: String
 
-    companion object {
-        private const val REQUEST_IMAGE_CAPTURE = 1
-    }
+
+    private lateinit var photoUtils: PhotoUtils
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,8 +40,10 @@ class AddContactActivity: AppCompatActivity() {
         photoImageView = findViewById(R.id.imageViewPhoto)
         saveButton = findViewById(R.id.buttonSave)
 
+        photoUtils = PhotoUtils(this)
+
         photoImageView.setOnClickListener {
-            dispatchTakePictureIntent()
+            photoUtils.dispatchTakePictureIntent()
         }
 
         saveButton.setOnClickListener {
@@ -49,42 +51,20 @@ class AddContactActivity: AppCompatActivity() {
         }
     }
 
-    private fun dispatchTakePictureIntent() {
-        val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (takePictureIntent.resolveActivity(packageManager) != null) {
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-        }
-    }
+
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+        if (requestCode == PhotoUtils.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             photoImageView.setImageBitmap(imageBitmap)
 
-            val photoUrl = saveImageToCache(imageBitmap)
+            val photoUrl = photoUtils.saveImageToCache(imageBitmap)
 
             setPhotoUrl(photoUrl)
         }
     }
 
-    private fun saveImageToCache(bitmap: Bitmap): String {
-        val uniqueId = UUID.randomUUID().toString()
-
-        val fileName = "contact_image_$uniqueId.jpg"
-        val file = File(cacheDir, fileName)
-
-        try {
-            val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
-            outputStream.flush()
-            outputStream.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return file.absolutePath
-    }
 
     private fun saveContact() {
         val name = nameEditText.text.toString()
