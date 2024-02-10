@@ -19,7 +19,7 @@ class AddContactActivity: AppCompatActivity() {
     private lateinit var nameEditText: EditText
     private lateinit var phoneEditText: EditText
     private lateinit var emailEditText: EditText
-    private lateinit var photoImageView: ImageView  // Додано поле для зображення
+    private lateinit var photoImageView: ImageView
     private lateinit var saveButton: Button
     private lateinit var dbHelper: DBHelper
     private lateinit var photoUrl: String
@@ -37,7 +37,7 @@ class AddContactActivity: AppCompatActivity() {
         nameEditText = findViewById(R.id.editTextName)
         phoneEditText = findViewById(R.id.editTextPhone)
         emailEditText = findViewById(R.id.editTextEmail)
-        photoImageView = findViewById(R.id.imageViewPhoto)  // Ідентифікатор для ImageView
+        photoImageView = findViewById(R.id.imageViewPhoto)
         saveButton = findViewById(R.id.buttonSave)
 
         photoImageView.setOnClickListener {
@@ -62,23 +62,18 @@ class AddContactActivity: AppCompatActivity() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             photoImageView.setImageBitmap(imageBitmap)
 
-            // Зберегти зображення в кеші додатку і отримати його посилання
             val photoUrl = saveImageToCache(imageBitmap)
 
-            // Встановити посилання на зображення
             setPhotoUrl(photoUrl)
         }
     }
 
     private fun saveImageToCache(bitmap: Bitmap): String {
-// Генеруйте унікальний ідентифікатор
         val uniqueId = UUID.randomUUID().toString()
 
-        // Створіть файл у кеші додатку з унікальним ідентифікатором
         val fileName = "contact_image_$uniqueId.jpg"
         val file = File(cacheDir, fileName)
 
-        // Використовуйте FileOutputStream для запису зображення у файл
         try {
             val outputStream = FileOutputStream(file)
             bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
@@ -86,10 +81,8 @@ class AddContactActivity: AppCompatActivity() {
             outputStream.close()
         } catch (e: IOException) {
             e.printStackTrace()
-            // Обробіть виняток, якщо не вдалося зберегти зображення
         }
 
-        // Поверніть посилання на зображення (URI або шлях до файлу)
         return file.absolutePath
     }
 
@@ -104,7 +97,6 @@ class AddContactActivity: AppCompatActivity() {
             put(DBHelper.ContactEntry.NAME, name)
             put(DBHelper.ContactEntry.PHONE, phone)
             put(DBHelper.ContactEntry.EMAIL, email)
-            // Перевірте, чи photoUrl не порожній перед додаванням його в ContentValues
             if (photoUrl.isNotEmpty()) {
                 put(DBHelper.ContactEntry.PHOTO_URL, photoUrl)
             }
@@ -133,7 +125,6 @@ class AddContactActivity: AppCompatActivity() {
         finish()
     }
     override fun onBackPressed() {
-        // Викликайте cancelContact(), коли користувач натискає кнопку "Назад"
         cancelContact()
     }
 

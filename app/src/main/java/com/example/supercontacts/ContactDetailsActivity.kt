@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import android.util.Log.INFO
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Button
@@ -14,7 +13,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
 import java.io.File
-import java.util.logging.Level.INFO
 
 class ContactDetailsActivity : AppCompatActivity() {
     private lateinit var nameEditText: EditText
@@ -73,7 +71,6 @@ class ContactDetailsActivity : AppCompatActivity() {
                 deleteContact()
             })
             .setNegativeButton("Скасувати", DialogInterface.OnClickListener { dialog, id ->
-                // Скасувати видалення
             })
 
         builder.create().show()
@@ -88,7 +85,6 @@ class ContactDetailsActivity : AppCompatActivity() {
         if (deletedRows > 0) {
             Toast.makeText(this, "Контакт видалено", Toast.LENGTH_SHORT).show()
 
-            // Видалення зображення
             if (contactPhotoUrl.isNotEmpty()) {
                 val file = File(contactPhotoUrl)
                 if (file.exists()) {

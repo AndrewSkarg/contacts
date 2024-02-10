@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
         dbHelper = DBHelper(this)
         listView = findViewById(R.id.listViewContacts)
 
-        // Отримання даних з бази даних і створення адаптера
         val cursor: Cursor = dbHelper.getAllContacts()
         val fromColumns = arrayOf(
             DBHelper.ContactEntry.PHOTO_URL,
@@ -51,10 +50,8 @@ class MainActivity : AppCompatActivity() {
         listView.adapter = adapter
 
         listView.setOnItemClickListener { parent, view, position, id ->
-            // Отримайте курсор для поточного елемента
             val cursor = parent.getItemAtPosition(position) as Cursor
 
-            // Отримайте дані з курсора
             val contactId = cursor.getLong(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry._ID))
             Log.d("lite","contact id "+contactId)
             val contactName = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.NAME))
@@ -62,8 +59,6 @@ class MainActivity : AppCompatActivity() {
             val contactPhotoUrl = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHOTO_URL))
             val contactEmail = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.EMAIL))
 
-            // Викличте нову активність або здійсніть інші дії з отриманими даними
-            // Наприклад, ви можете відкрити нову активність для перегляду деталей контакту
             openContactDetails(contactId,contactEmail,contactName, contactPhone, contactPhotoUrl)
         }
     }
@@ -91,23 +86,19 @@ class MainActivity : AppCompatActivity() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == ADD_CONTACT_REQUEST_CODE  && resultCode == RESULT_OK) {
-            // Оновіть дані адаптера тут
             adapter.changeCursor(dbHelper.getAllContacts())
         }
     }
     private fun openContactDetails(contactId:Long,contactEmail:String, contactName: String, contactPhone: String, contactPhotoUrl: String) {
-        // Створіть інтент для відкриття деталей контакту
         val intent = Intent(this, ContactDetailsActivity::class.java)
 
-        // Передайте дані контакту через інтент
         intent.putExtra("contact_id",contactId )
 
         intent.putExtra("contact_name", contactName)
         intent.putExtra("contact_phone", contactPhone)
         intent.putExtra("contact_photo_url", contactPhotoUrl)
-        intent.putExtra("contact_email", contactEmail)  // Додано передачу електронної пошти
+        intent.putExtra("contact_email", contactEmail)
 
-        // Запустіть нову активність
         startActivityForResult(intent, ADD_CONTACT_REQUEST_CODE)
     }
 }

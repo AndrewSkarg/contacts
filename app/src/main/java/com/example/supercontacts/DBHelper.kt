@@ -20,7 +20,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         const val NAME = "name"
         const val PHONE = "phone"
         const val EMAIL = "email"
-        const val PHOTO_URL = "photo_url"  // Замість PHOTO додано PHOTO_URL
+        const val PHOTO_URL = "photo_url"
     }
 
     override fun onCreate(db: SQLiteDatabase) {
@@ -29,13 +29,12 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                 "${ContactEntry.NAME} TEXT," +
                 "${ContactEntry.PHONE} TEXT," +
                 "${ContactEntry.EMAIL} TEXT," +
-                "${ContactEntry.PHOTO_URL} TEXT)"  // Додано нове поле PHOTO_URL
+                "${ContactEntry.PHOTO_URL} TEXT)"
 
         db.execSQL(createTableQuery)
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
-        // Ви можете додати логіку для оновлення бази даних при зміні версії
     }
 
     fun getAllContacts(): Cursor {
@@ -58,7 +57,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
         val rowsUpdated = db.update(DBHelper.ContactEntry.TABLE_NAME, values, "${DBHelper.ContactEntry._ID}=?", arrayOf(contactId.toString()))
 
-        // Перевірте, чи були оновлені рядки і поверніть відповідне значення
         return rowsUpdated > 0
     }
 
