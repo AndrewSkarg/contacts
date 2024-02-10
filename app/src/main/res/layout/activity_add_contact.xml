@@ -15,16 +15,29 @@
         android:src="@drawable/ic_launcher_foreground"
         android:scaleType="centerCrop"/>
 
-    <!-- Додано дві іконки (телефону та повідомлення) -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center">
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_phone_24"
+            android:layout_margin="8dp"/>
 
+        <!-- Пробіл між іконками залишається автоматично через layout_weight -->
 
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:src="@drawable/ic_baseline_sms_24"
+            android:layout_margin="8dp"/>
     </LinearLayout>
+
 
     <EditText
         android:id="@+id/editTextName"
