@@ -50,8 +50,10 @@
             android:layout_height="wrap_content"
             android:hint="Ім'я"
             android:inputType="textPersonName"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
 
-            android:layout_margin="16dp"/>
+            android:layout_marginTop="16dp"/>
 
         <EditText
             android:id="@+id/editTextPhone"
@@ -78,7 +80,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:layout_margin="16dp"
             android:text="Зберегти" />
     </LinearLayout>
 
