@@ -107,19 +107,34 @@ class AddContactActivity: AppCompatActivity() {
             // Перевірте, чи photoUrl не порожній перед додаванням його в ContentValues
             if (photoUrl.isNotEmpty()) {
                 put(DBHelper.ContactEntry.PHOTO_URL, photoUrl)
-            }        }
+            }
+        }
 
         val newRowId = db.insert(DBHelper.ContactEntry.TABLE_NAME, null, values)
 
         if (newRowId > -1) {
             Toast.makeText(this, "Контакт збережено: $name, $phone, $email", Toast.LENGTH_SHORT).show()
+            setResult(RESULT_OK)
             finish()
+
         } else {
             Toast.makeText(this, "Помилка збереження контакту", Toast.LENGTH_SHORT).show()
+            setResult(RESULT_CANCELED)
         }
+
     }
+
 
     private fun setPhotoUrl(url: String) {
         photoUrl = url
     }
+    private fun cancelContact() {
+        setResult(RESULT_CANCELED)
+        finish()
+    }
+    override fun onBackPressed() {
+        // Викликайте cancelContact(), коли користувач натискає кнопку "Назад"
+        cancelContact()
+    }
+
 }

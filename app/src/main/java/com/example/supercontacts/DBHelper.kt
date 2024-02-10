@@ -1,6 +1,7 @@
 package com.example.supercontacts
 
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import android.provider.BaseColumns
@@ -33,5 +34,10 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {
         // Ви можете додати логіку для оновлення бази даних при зміні версії
+    }
+
+    fun getAllContacts(): Cursor {
+        val db = this.readableDatabase
+        return db.query(ContactEntry.TABLE_NAME, null, null, null, null, null, null)
     }
 }
