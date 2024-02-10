@@ -48,6 +48,21 @@ class MainActivity : AppCompatActivity() {
         )
 
         listView.adapter = adapter
+
+        listView.setOnItemClickListener { parent, view, position, id ->
+            // Отримайте курсор для поточного елемента
+            val cursor = parent.getItemAtPosition(position) as Cursor
+
+            // Отримайте дані з курсора
+            val contactName = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.NAME))
+            val contactPhone = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHONE))
+            val contactPhotoUrl = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHOTO_URL))
+            val contactEmail = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.EMAIL))
+
+            // Викличте нову активність або здійсніть інші дії з отриманими даними
+            // Наприклад, ви можете відкрити нову активність для перегляду деталей контакту
+            openContactDetails(contactEmail,contactName, contactPhone, contactPhotoUrl)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -77,6 +92,18 @@ class MainActivity : AppCompatActivity() {
             adapter.changeCursor(dbHelper.getAllContacts())
         }
     }
+    private fun openContactDetails(contactEmail:String, contactName: String, contactPhone: String, contactPhotoUrl: String) {
+        // Створіть інтент для відкриття деталей контакту
+        val intent = Intent(this, ContactDetailsActivity::class.java)
 
+        // Передайте дані контакту через інтент
+        intent.putExtra("contact_name", contactName)
+        intent.putExtra("contact_phone", contactPhone)
+        intent.putExtra("contact_photo_url", contactPhotoUrl)
+        intent.putExtra("contact_email", contactEmail)  // Додано передачу електронної пошти
+
+        // Запустіть нову активність
+        startActivity(intent)
+    }
 }
 

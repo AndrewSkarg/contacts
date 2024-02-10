@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Skarg/AndroidStudioProjects/SuperContacts/app/src/main/res/layout-land/activity_add_contact.xml" value="0.15416666666666667" />
         <entry key="..\:/Users/Skarg/AndroidStudioProjects/SuperContacts/app/src/main/res/layout/activity_add_contact.xml" value="0.2" />
         <entry key="..\:/Users/Skarg/AndroidStudioProjects/SuperContacts/app/src/main/res/layout/activity_main.xml" value="0.21754385964912282" />
         <entry key="..\:/Users/Skarg/AndroidStudioProjects/SuperContacts/app/src/main/res/layout/list_item_contact.xml" value="0.1" />
