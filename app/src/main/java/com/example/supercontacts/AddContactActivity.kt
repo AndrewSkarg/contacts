@@ -57,11 +57,11 @@ class AddContactActivity: AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PhotoUtils.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            photoImageView.setImageBitmap(imageBitmap)
 
             val photoUrl = photoUtils.saveImageToCache(imageBitmap)
-
+            photoUtils.loadContactImage(photoImageView, photoUrl)
             setPhotoUrl(photoUrl)
+
         }
     }
 
@@ -70,7 +70,10 @@ class AddContactActivity: AppCompatActivity() {
         val name = nameEditText.text.toString()
         val phone = phoneEditText.text.toString()
         val email = emailEditText.text.toString()
-
+        if (name.isEmpty() || phone.isEmpty()) {
+            Toast.makeText(this, "Ім'я та телефон не можуть бути порожніми", Toast.LENGTH_SHORT).show()
+            return
+        }
         val newRowId = dbHelper.saveContact(name, phone, email, photoUrl)
 
         if (newRowId > -1) {

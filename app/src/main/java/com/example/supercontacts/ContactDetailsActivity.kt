@@ -105,10 +105,7 @@ class ContactDetailsActivity : AppCompatActivity() {
             Toast.makeText(this, "Контакт видалено", Toast.LENGTH_SHORT).show()
 
             if (contactPhotoUrl.isNotEmpty()) {
-                val file = File(contactPhotoUrl)
-                if (file.exists()) {
-                    file.delete()
-                }
+                    PhotoUtils.deletePhoto(contactPhotoUrl);
             }
 
             setResult(RESULT_OK)
@@ -122,10 +119,8 @@ class ContactDetailsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
         if (requestCode == PhotoUtils.REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
-            photoImageView.setImageBitmap(imageBitmap)
-
             val photoUrl = photoUtils.saveImageToCache(imageBitmap)
-
+            photoUtils.loadContactImage(photoImageView, photoUrl)
             setPhotoUrl(photoUrl)
         }
     }
@@ -145,6 +140,7 @@ class ContactDetailsActivity : AppCompatActivity() {
 
         var isUpdated: Boolean;
         if (updatedPhotoUrl.isNotEmpty()){
+            PhotoUtils.deletePhoto(contactPhotoUrl);
             isUpdated = dbHelper.updateContact(contactId, name, phone, email, updatedPhotoUrl)
 
         }
