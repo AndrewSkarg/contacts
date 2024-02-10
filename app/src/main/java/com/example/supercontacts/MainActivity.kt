@@ -9,11 +9,14 @@ import android.support.v7.widget.Toolbar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.ListView
 
 class MainActivity : AppCompatActivity() {
     private lateinit var dbHelper: DBHelper
     private lateinit var listView: ListView
+    private lateinit var addButton: Button
+
     private lateinit var adapter: SimpleCursorAdapter
     companion object {
         private const val ADD_CONTACT_REQUEST_CODE = 1001
@@ -25,7 +28,10 @@ class MainActivity : AppCompatActivity() {
 
         dbHelper = DBHelper(this)
         listView = findViewById(R.id.listViewContacts)
-
+        addButton = findViewById(R.id.addBtn);
+        addButton.setOnClickListener {
+            addContact()
+        }
         val cursor: Cursor = dbHelper.getAllContacts()
         val fromColumns = arrayOf(
             DBHelper.ContactEntry.PHOTO_URL,
