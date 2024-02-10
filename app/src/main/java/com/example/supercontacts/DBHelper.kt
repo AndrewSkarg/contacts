@@ -17,15 +17,16 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         const val NAME = "name"
         const val PHONE = "phone"
         const val EMAIL = "email"
-        const val PHOTO = "photo"
-
+        const val PHOTO_URL = "photo_url"  // Замість PHOTO додано PHOTO_URL
     }
 
     override fun onCreate(db: SQLiteDatabase) {
         val createTableQuery = "CREATE TABLE ${ContactEntry.TABLE_NAME} (" +
                 "${BaseColumns._ID} INTEGER PRIMARY KEY AUTOINCREMENT," +
                 "${ContactEntry.NAME} TEXT," +
-                "${ContactEntry.PHONE} TEXT)"
+                "${ContactEntry.PHONE} TEXT," +
+                "${ContactEntry.EMAIL} TEXT," +
+                "${ContactEntry.PHOTO_URL} TEXT)"  // Додано нове поле PHOTO_URL
 
         db.execSQL(createTableQuery)
     }
