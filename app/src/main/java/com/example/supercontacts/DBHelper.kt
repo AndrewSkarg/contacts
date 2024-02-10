@@ -42,6 +42,22 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         return db.query(ContactEntry.TABLE_NAME, null, null, null, null, null, null)
     }
 
+    fun saveContact(name: String, phone: String, email: String, photoUrl: String): Long {
+        val db = writableDatabase
+
+        val values = ContentValues().apply {
+            put(ContactEntry.NAME, name)
+            put(ContactEntry.PHONE, phone)
+            put(ContactEntry.EMAIL, email)
+            if (photoUrl.isNotEmpty()) {
+                put(ContactEntry.PHOTO_URL, photoUrl)
+            }
+        }
+
+        return db.insert(ContactEntry.TABLE_NAME, null, values)
+    }
+
+
     fun deleteContact(contactId: Long): Int {
         val db = writableDatabase
         return db.delete(ContactEntry.TABLE_NAME, "${ContactEntry._ID}=?", arrayOf(contactId.toString()))
@@ -53,6 +69,9 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
             put(DBHelper.ContactEntry.NAME, name)
             put(DBHelper.ContactEntry.PHONE, phone)
             put(DBHelper.ContactEntry.EMAIL, email)
+            if (photoUrl.isNotEmpty()) {
+                put(ContactEntry.PHOTO_URL, photoUrl)
+            }
         }
 
         val rowsUpdated = db.update(DBHelper.ContactEntry.TABLE_NAME, values, "${DBHelper.ContactEntry._ID}=?", arrayOf(contactId.toString()))

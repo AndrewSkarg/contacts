@@ -91,30 +91,18 @@ class AddContactActivity: AppCompatActivity() {
         val phone = phoneEditText.text.toString()
         val email = emailEditText.text.toString()
 
-        val db = dbHelper.writableDatabase
-
-        val values = ContentValues().apply {
-            put(DBHelper.ContactEntry.NAME, name)
-            put(DBHelper.ContactEntry.PHONE, phone)
-            put(DBHelper.ContactEntry.EMAIL, email)
-            if (photoUrl.isNotEmpty()) {
-                put(DBHelper.ContactEntry.PHOTO_URL, photoUrl)
-            }
-        }
-
-        val newRowId = db.insert(DBHelper.ContactEntry.TABLE_NAME, null, values)
+        val newRowId = dbHelper.saveContact(name, phone, email, photoUrl)
 
         if (newRowId > -1) {
             Toast.makeText(this, "Контакт збережено: $name, $phone, $email", Toast.LENGTH_SHORT).show()
             setResult(RESULT_OK)
             finish()
-
         } else {
             Toast.makeText(this, "Помилка збереження контакту", Toast.LENGTH_SHORT).show()
             setResult(RESULT_CANCELED)
         }
-
     }
+
 
 
     private fun setPhotoUrl(url: String) {

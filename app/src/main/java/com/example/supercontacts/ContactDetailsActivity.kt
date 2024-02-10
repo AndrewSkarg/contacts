@@ -23,6 +23,8 @@ class ContactDetailsActivity : AppCompatActivity() {
     private lateinit var photoImageView: ImageView
     private lateinit var contactPhotoUrl: String
 
+
+
     private var contactId: Long = -1
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,8 +47,16 @@ class ContactDetailsActivity : AppCompatActivity() {
         nameEditText.setText(contactName)
         phoneEditText.setText(contactPhone)
         emailEditText.setText(contactEmail)
-        val bitmap = BitmapFactory.decodeFile(contactPhotoUrl)
-        photoImageView.setImageBitmap(bitmap)
+
+        if (contactPhotoUrl.trim().isNotEmpty()) {
+            Log.d("lite","no  back"+contactPhotoUrl)
+
+            val bitmap = BitmapFactory.decodeFile(contactPhotoUrl)
+            photoImageView.setImageBitmap(bitmap)
+        }else{
+            Log.d("lite","set back")
+            photoImageView.setImageResource(R.drawable.ic_launcher_foreground)
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

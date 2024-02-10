@@ -56,9 +56,11 @@ class MainActivity : AppCompatActivity() {
             Log.d("lite","contact id "+contactId)
             val contactName = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.NAME))
             val contactPhone = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHONE))
-            val contactPhotoUrl = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHOTO_URL))
+            var contactPhotoUrl = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.PHOTO_URL))
             val contactEmail = cursor.getString(cursor.getColumnIndexOrThrow(DBHelper.ContactEntry.EMAIL))
-
+            if (contactPhotoUrl===null){
+                contactPhotoUrl="";
+            }
             openContactDetails(contactId,contactEmail,contactName, contactPhone, contactPhotoUrl)
         }
     }
