@@ -1,5 +1,6 @@
 package com.example.supercontacts
 
+import android.content.ContentValues
 import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
@@ -15,6 +16,7 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     object ContactEntry : BaseColumns {
         const val TABLE_NAME = "contacts"
+        const val _ID = BaseColumns._ID
         const val NAME = "name"
         const val PHONE = "phone"
         const val EMAIL = "email"
@@ -40,4 +42,24 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         val db = this.readableDatabase
         return db.query(ContactEntry.TABLE_NAME, null, null, null, null, null, null)
     }
+
+    fun deleteContact(contactId: Long): Int {
+        val db = writableDatabase
+        return db.delete(ContactEntry.TABLE_NAME, "${ContactEntry._ID}=?", arrayOf(contactId.toString()))
+    }
+
+    fun updateContact(contactId: Long, name: String, phone: String, email: String, photoUrl: String): Boolean {
+        val db = writableDatabase
+        val values = ContentValues().apply {
+            put(DBHelper.ContactEntry.NAME, name)
+            put(DBHelper.ContactEntry.PHONE, phone)
+            put(DBHelper.ContactEntry.EMAIL, email)
+        }
+
+        val rowsUpdated = db.update(DBHelper.ContactEntry.TABLE_NAME, values, "${DBHelper.ContactEntry._ID}=?", arrayOf(contactId.toString()))
+
+        // Перевірте, чи були оновлені рядки і поверніть відповідне значення
+        return rowsUpdated > 0
+    }
+
 }

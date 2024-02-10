@@ -81,7 +81,7 @@ class AddContactActivity: AppCompatActivity() {
         // Використовуйте FileOutputStream для запису зображення у файл
         try {
             val outputStream = FileOutputStream(file)
-            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream)
             outputStream.flush()
             outputStream.close()
         } catch (e: IOException) {
