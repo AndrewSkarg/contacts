@@ -6,7 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
-    <Button android:layout_height="wrap_content"
+    <Button
+        android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -18,6 +19,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="@id/addBtn"
         app:layout_constraintStart_toStartOf="@id/addBtn"
-        app:layout_constraintTop_toBottomOf="@id/addBtn" />
+        app:layout_constraintTop_toBottomOf="@id/addBtn"
+        android:paddingBottom="50dp"
+        android:clipToPadding="false"/>
 
 </android.support.constraint.ConstraintLayout>

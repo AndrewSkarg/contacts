@@ -26,6 +26,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+
         dbHelper = DBHelper(this)
         listView = findViewById(R.id.listViewContacts)
         addButton = findViewById(R.id.addBtn);
@@ -71,20 +72,9 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.main_menu, menu)
-        return true
-    }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.action_add_contact -> {
-                addContact()
-                return true
-            }
-            else -> return super.onOptionsItemSelected(item)
-        }
-    }
+
+
 
     private fun addContact() {
         val intent = Intent(this, AddContactActivity::class.java)
